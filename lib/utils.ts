@@ -32,12 +32,12 @@ export function formatDateString(dateString: string) {
 }
 
 // created by chatgpt
-export function formatThreadCount(count: number): string {
+export function formatMessageCount(count: number): string {
   if (count === 0) {
-    return "No Connect";
+    return "No Messages";
   } else {
-    const threadCount = count.toString().padStart(2, "0");
-    const threadWord = count === 1 ? "Thread" : "Connect";
-    return `${threadCount} ${threadWord}`;
+    const messageCount = count.toString().padStart(2, "0");
+    const messageWord = count === 1 ? "Message" : "Messages";
+    return `${messageCount} ${messageWord}`;
   }
 }

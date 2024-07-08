@@ -3,13 +3,13 @@ import { redirect } from "next/navigation";
 import { fetchCommunityPosts } from "@/lib/actions/community.actions";
 import { fetchUserPosts } from "@/lib/actions/user.actions";
 
-import ThreadCard from "../cards/ThreadCard";
+import MessageCard from "../cards/MessageCard";
 
 interface Result {
   name: string;
   image: string;
   id: string;
-  Connect: {
+  Messages: {
     _id: string;
     text: string;
     parentId: string | null;
@@ -38,7 +38,7 @@ interface Props {
   accountType: string;
 }
 
-async function ConnectTab({ currentUserId, accountId, accountType }: Props) {
+async function MessagesTab({ currentUserId, accountId, accountType }: Props) {
   let result: Result;
 
   if (accountType === "Community") {
@@ -53,33 +53,33 @@ async function ConnectTab({ currentUserId, accountId, accountType }: Props) {
 
   return (
     <section className='mt-9 flex flex-col gap-10'>
-      {result.Connect.map((thread) => (
-        <ThreadCard
-          key={thread._id}
-          id={thread._id}
+      {result.Messages.map((message) => (
+        <MessageCard
+          key={message._id}
+          id={message._id}
           currentUserId={currentUserId}
-          parentId={thread.parentId}
-          content={thread.text}
+          parentId={message.parentId}
+          content={message.text}
           author={
             accountType === "User"
               ? { name: result.name, image: result.image, id: result.id }
               : {
-                  name: thread.author.name,
-                  image: thread.author.image,
-                  id: thread.author.id,
+                  name: message.author.name,
+                  image: message.author.image,
+                  id: message.author.id,
                 }
           }
           community={
             accountType === "Community"
               ? { name: result.name, id: result.id, image: result.image }
-              : thread.community
+              : message.community
           }
-          createdAt={thread.createdAt}
-          comments={thread.children}
+          createdAt={message.createdAt}
+          comments={message.children}
         />
       ))}
     </section>
   );
 }
 
-export default ConnectTab;
+export default MessagesTab;

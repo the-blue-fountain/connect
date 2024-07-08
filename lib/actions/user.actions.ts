@@ -4,7 +4,7 @@ import { FilterQuery, SortOrder } from "mongoose";
 import { revalidatePath } from "next/cache";
 
 import Community from "../models/community.model";
-import Thread from "../models/thread.model";
+import Message from "../models/message.model";
 import User from "../models/user.model";
 
 import { connectToDB } from "../mongoose";
@@ -66,10 +66,10 @@ export async function fetchUserPosts(userId: string) {
   try {
     connectToDB();
 
-    // Find all Connect authored by the user with the given userId
-    const Connect = await User.findOne({ id: userId }).populate({
-      path: "Connect",
-      model: Thread,
+    // Find all Messages authored by the user with the given userId
+    const Messages = await User.findOne({ id: userId }).populate({
+      path: "Messages",
+      model: Message,
       populate: [
         {
           path: "community",
@@ -78,7 +78,7 @@ export async function fetchUserPosts(userId: string) {
         },
         {
           path: "children",
-          model: Thread,
+          model: Message,
           populate: {
             path: "author",
             model: User,
@@ -87,9 +87,9 @@ export async function fetchUserPosts(userId: string) {
         },
       ],
     });
-    return Connect;
+    return Messages;
   } catch (error) {
-    console.error("Error fetching user Connect:", error);
+    console.error("Error fetching user Messages:", error);
     throw error;
   }
 }
@@ -157,18 +157,18 @@ export async function getActivity(userId: string) {
   try {
     connectToDB();
 
-    // Find all Connect created by the user
-    const userConnect = await Thread.find({ author: userId });
+    // Find all Messages created by the user
+    const userMessages = await Message.find({ author: userId });
 
-    // Collect all the child thread ids (replies) from the 'children' field of each user thread
-    const childThreadIds = userConnect.reduce((acc, userThread) => {
-      return acc.concat(userThread.children);
+    // Collect all the child message ids (replies) from the 'children' field of each user message
+    const childMessageIds = userMessages.reduce((acc, userMessage) => {
+      return acc.concat(userMessage.children);
     }, []);
 
-    // Find and return the child Connect (replies) excluding the ones created by the same user
-    const replies = await Thread.find({
-      _id: { $in: childThreadIds },
-      author: { $ne: userId }, // Exclude Connect authored by the same user
+    // Find and return the child Messages (replies) excluding the ones created by the same user
+    const replies = await Message.find({
+      _id: { $in: childMessageIds },
+      author: { $ne: userId }, // Exclude Messages authored by the same user
     }).populate({
       path: "author",
       model: User,

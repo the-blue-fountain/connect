@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const Connectchema = new mongoose.Schema({
+const messageSchema = new mongoose.Schema({
   text: {
     type: String,
     required: true,
@@ -24,11 +24,11 @@ const Connectchema = new mongoose.Schema({
   children: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Thread",
+      ref: "Message",
     },
   ],
 });
 
-const Thread = mongoose.models.Thread || mongoose.model("Thread", Connectchema);
+const Message = mongoose.models.Message || mongoose.model("Message", messageSchema);
 
-export default Thread;
+export default Message;

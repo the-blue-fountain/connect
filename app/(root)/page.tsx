@@ -1,10 +1,10 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
-import ThreadCard from "@/components/cards/ThreadCard";
+import MessageCard from "@/components/cards/MessageCard";
 import Pagination from "@/components/shared/Pagination";
 
-import { fetchPosts } from "@/lib/actions/thread.actions";
+import { fetchPosts } from "@/lib/actions/message.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
 
 async function Home({
@@ -31,11 +31,11 @@ async function Home({
 
       <section className='mt-9 flex flex-col gap-10'>
         {result.posts.length === 0 ? (
-          <p className='no-result'>No Connect found</p>
+          <p className='no-result'>No Messages found</p>
         ) : (
           <>
             {result.posts.map((post) => (
-              <ThreadCard
+              <MessageCard
                 key={post._id}
                 id={post._id}
                 currentUserId={user.id}

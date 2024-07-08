@@ -13,7 +13,7 @@ import Topbar from "@/components/shared/Topbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Connect",
+  title: "Messages",
   description: "Bridging Distances, Building Relationships",
 };
 
