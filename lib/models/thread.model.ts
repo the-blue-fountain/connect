@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const threadSchema = new mongoose.Schema({
+const Connectchema = new mongoose.Schema({
   text: {
     type: String,
     required: true,
@@ -29,6 +29,6 @@ const threadSchema = new mongoose.Schema({
   ],
 });
 
-const Thread = mongoose.models.Thread || mongoose.model("Thread", threadSchema);
+const Thread = mongoose.models.Thread || mongoose.model("Thread", Connectchema);
 
 export default Thread;

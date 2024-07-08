@@ -9,7 +9,7 @@ interface Result {
   name: string;
   image: string;
   id: string;
-  threads: {
+  Connect: {
     _id: string;
     text: string;
     parentId: string | null;
@@ -38,7 +38,7 @@ interface Props {
   accountType: string;
 }
 
-async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
+async function ConnectTab({ currentUserId, accountId, accountType }: Props) {
   let result: Result;
 
   if (accountType === "Community") {
@@ -53,7 +53,7 @@ async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
 
   return (
     <section className='mt-9 flex flex-col gap-10'>
-      {result.threads.map((thread) => (
+      {result.Connect.map((thread) => (
         <ThreadCard
           key={thread._id}
           id={thread._id}
@@ -82,4 +82,4 @@ async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
   );
 }
 
-export default ThreadsTab;
+export default ConnectTab;

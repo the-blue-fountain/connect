@@ -20,7 +20,7 @@ const communitySchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  threads: [
+  Connect: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Thread",
